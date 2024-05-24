@@ -29,6 +29,8 @@ def booking_options(location):
 
 
 def main():
+    st.set_page_config(page_title="Trip Roulette", page_icon=None, layout="centered", initial_sidebar_state="expanded", menu_items=None)
+
     df = load_dataset("data/worldcities.csv")
     st.markdown("<h1 style='text-align: center;'>Trip Roulette</h1>",
                 unsafe_allow_html=True)

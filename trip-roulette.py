@@ -39,9 +39,10 @@ def booking_options_expedia(city_chosen):
             check_out = lambda: dates[1] if len(dates) > 1 else tommorow
             travelers = st.number_input(
                 "Travellers", min_value=1, value=2, placeholder="hello world")
-            url = f"https://www.expedia.ca/Hotel-Search?destination={city_chosen['city']}%2C%20{city_chosen['country']}&flexibility=0_DAY&d1=2024-05-29&startDate={check_in}&d2=2024-06-06&endDate={check_out}&adults={travelers}&rooms=1&theme=&userIntent=&semdtl=&useRewards=false&sort=RECOMMENDED&clickref=1101lyBFty4W&affcid=CA.DIRECT.PHG.1101l354964.0&ref_id=1101lyBFty4W&my_ad=AFF.CA.DIRECT.PHG.1101l354964.0&afflid=1101lyBFty4W"
+            url = f"https://www.expedia.ca/Hotel-Search?destination={city_chosen['city']}%2C%20{city_chosen['country']}&startDate={check_in()}&endDate={check_out()}&adults={travelers}&rooms=1&theme=&userIntent=&semdtl=&useRewards=false&sort=RECOMMENDED&clickref=1101lyBFty4W&affcid=CA.DIRECT.PHG.1101l354964.0&ref_id=1101lyBFty4W&my_ad=AFF.CA.DIRECT.PHG.1101l354964.0&afflid=1101lyBFty4W"
         
             st.link_button("See available booking", url, use_container_width=True)
+
         show_options()
     return
 
@@ -49,12 +50,15 @@ def booking_options_expedia(city_chosen):
 def normalize_city_name(city_name: str):
     return urllib.parse.quote(city_name)
 
+
 def main():
     st.set_page_config(page_title="Trip Roulette", 
                        page_icon=None,
                        layout="centered", 
                        initial_sidebar_state="expanded", 
                        menu_items=None)
+    
+    st.logo("data/logo.png")
 
     # Get the font Roboto from Google api
     streamlit_style = """
@@ -95,6 +99,16 @@ def main():
     with map_placeholder:
         st_folium(mo, use_container_width=True,
                   returned_objects=[], height=500)
+    
+    # Explanation of the concept
+    explanation: str = '''
+    Trip Roulette is the ideal way to go out and explore the world like the true adventurer that you really are with this simple concept that randomize 137 000 possible destination around the world.
+    - Narrow down the randomness by country or sub region (or not and hope for the best)
+    - Click to uncover right away where you're going next!
+    '''
+
+    with st.expander("What is Trip Roulette?"):
+        st.markdown(explanation)
 
     if btn_placeholder.button("Uncover your destination!", use_container_width=True, type="primary"):
         city_chosen, df_city = choose_random_city(
@@ -116,7 +130,7 @@ def main():
         st.sidebar.subheader(f"[{city_chosen['city']}, {city_chosen['country']}](https://en.wikipedia.org/wiki/{normalize_city_name(str(city_chosen['city']))})", 
                              divider="gray") # Sidebar subheader containing link to Wikipedia
 
-        st.sidebar.header("Your next adventure is just a suitcase away")
+        st.sidebar.header("Your next adventure is just a couple clicks away!")
         
         booking_options_expedia(city_chosen=city_chosen) # Link to Expedia websites containing booking options
 

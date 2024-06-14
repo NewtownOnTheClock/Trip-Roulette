@@ -135,5 +135,5 @@ def main():
         booking_options_expedia(city_chosen=city_chosen) # Link to Expedia websites containing booking options
 
 
-if __name__ == main():
+if __name__ == "__main__":
     main()

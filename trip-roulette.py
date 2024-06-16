@@ -58,6 +58,15 @@ def main():
                        initial_sidebar_state="expanded", 
                        menu_items=None)
     
+    hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+    st.markdown(hide_st_style, unsafe_allow_html=True)
+    
     st.logo("data/logo.png")
 
     # Get the font Roboto from Google api
